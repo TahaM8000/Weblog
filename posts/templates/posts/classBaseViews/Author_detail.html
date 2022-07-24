@@ -1,0 +1,37 @@
+{% extends "oldview/base.html" %}
+{% load static %}
+
+
+{% block img %}{{Author.Avatar.url}}{% endblock %}
+
+{% block title %}{{Author.username}}{% endblock %}
+{% block sub-title %}{{Author.get_full_name}}{% endblock %}
+
+
+{% block content %}
+<div class="container px-4 px-lg-5">
+      <div class="row gx-4 gx-lg-5 justify-content-center">
+          <div class="col-md-10 col-lg-8 col-xl-7">
+              <!-- Post preview-->
+            {%  for post in object_list %}
+              <div class="post-preview">
+                  <a href="{% url 'old:post' post.slug %}">
+                      <h2 class="post-title">{{post.name}}</h2>
+                      <h3 class="post-subtitle">{{post.preview|safe}}</h3>
+                  </a>
+                  <p class="post-meta">
+                      نوشته شده در تاریخ
+                      {{post.jpublish}}
+                  </p>
+              </div>
+            {% endfor %}
+            <div class="clearfix pager-botton">
+              {% if page_obj.has_next %}
+                  <a class="btn btn-primary float-right " href="{% url 'old:author' post.Author page_obj.next_page_number %}">پست قدیمی &rarr;</a>
+              {% endif %}
+              {% if page_obj.has_previous %}
+                  <a class="btn btn-primary float-right " href="{% url 'old:author' post.Author page_obj.previous_page_number %}">پست جدید &larr;</a>
+              {% endif %}
+            </div>
+
+{% endblock %}

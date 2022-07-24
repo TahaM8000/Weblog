@@ -15,7 +15,7 @@
             {%  for post in object_list %}
               <div class="post-preview">
 
-                  <a href="">
+                  <a href="{% url 'posts:post' post.slug %} ">
                       <h2 class="post-title " >{{post.title}}</h2>
                       <h3 class="post-subtitle">{{post.preview|safe}}</h3>
                   </a>
@@ -27,10 +27,10 @@
 
           <div class="clearfix pager-botton">
             {% if page_obj.has_next %}
-                <a class="btn btn-primary float-right " href="{% url 'old:home' page_obj.next_page_number %}">پست قدیمی &rarr;</a>
+                <a class="btn btn-primary float-right " href="{% url 'posts:home' page_obj.next_page_number %}">پست قدیمی &rarr;</a>
             {% endif %}
             {% if page_obj.has_previous %}
-                <a class="btn btn-primary float-right " href="{% url 'old:home' page_obj.previous_page_number %}">پست جدید &larr;</a>
+                <a class="btn btn-primary float-right " href="{% url 'posts:home' page_obj.previous_page_number %}">پست جدید &larr;</a>
             {% endif %}
         </div>
 {% endblock %}
