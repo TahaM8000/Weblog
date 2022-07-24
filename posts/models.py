@@ -3,7 +3,7 @@ from core.settings import AUTH_USER_MODEL as User
 from .managers import *
 from django.urls import reverse
 from django.utils import timezone
-# from extensions.utils import jalali_coverter
+from utils.utils import jalali_converter
 from django.utils.html import format_html
 
 class Post(models.Model):
@@ -41,9 +41,9 @@ class Post(models.Model):
     #     return reverse("account:home")
 
 
-    # def jpublish(self):
-    #     return jalali_coverter(self.publish)
-    # jpublish.short_description = "publish"
+    def jpublish(self):
+        return jalali_converter(self.publish)
+    jpublish.short_description = "publish"
 
     def __str__(self):
         return self.title

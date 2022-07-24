@@ -1,11 +1,11 @@
-{% extends "oldview/base.html" %}
+{% extends "posts/base.html" %}
 {% load static %}
 
 
 {% block img %}{{Author.Avatar.url}}{% endblock %}
 
-{% block title %}{{Author.username}}{% endblock %}
-{% block sub-title %}{{Author.get_full_name}}{% endblock %}
+{% block title %}{{Author}}{% endblock %}
+{% block sub-title %}نویسنده{% endblock %}
 
 
 {% block content %}
@@ -15,7 +15,7 @@
               <!-- Post preview-->
             {%  for post in object_list %}
               <div class="post-preview">
-                  <a href="{% url 'old:post' post.slug %}">
+                  <a href="{% url 'posts:post' post.slug %}">
                       <h2 class="post-title">{{post.name}}</h2>
                       <h3 class="post-subtitle">{{post.preview|safe}}</h3>
                   </a>
@@ -27,10 +27,10 @@
             {% endfor %}
             <div class="clearfix pager-botton">
               {% if page_obj.has_next %}
-                  <a class="btn btn-primary float-right " href="{% url 'old:author' post.Author page_obj.next_page_number %}">پست قدیمی &rarr;</a>
+                  <a class="btn btn-primary float-right " href="{% url 'posts:author' Author.phoneNumber page_obj.next_page_number %}">پست قدیمی &rarr;</a>
               {% endif %}
               {% if page_obj.has_previous %}
-                  <a class="btn btn-primary float-right " href="{% url 'old:author' post.Author page_obj.previous_page_number %}">پست جدید &larr;</a>
+                  <a class="btn btn-primary float-right " href="{% url 'posts:author' Author.phoneNumber page_obj.previous_page_number %}">پست جدید &larr;</a>
               {% endif %}
             </div>
 

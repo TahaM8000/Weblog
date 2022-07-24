@@ -20,7 +20,7 @@
                       <h3 class="post-subtitle">{{post.preview|safe}}</h3>
                   </a>
                   <p class="post-meta">نوشته شده توسط
-                      <a href="">{{post.Author}}</a>
+                      <a href="{% url 'posts:author' post.Author.phoneNumber %}">{{post.Author}}</a>
                      در تاریخ {{post.jpublish}}</p>
               </div>
             {% endfor %}
