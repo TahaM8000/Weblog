@@ -1,0 +1,8 @@
+<div class="collapse navbar-collapse" id="navbarResponsive">
+    <ul class="navbar-nav ms-auto py-4 py-lg-0">
+      {% for cat in cats %}
+          <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'old:category' cat.slug %}">{{cat.name}}</a></li>
+        {% endfor %}
+        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'login' %}">پنل</a></li>
+    </ul>
+</div>

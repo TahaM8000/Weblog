@@ -33,7 +33,7 @@ class Post(models.Model):
         verbose_name_plural = "پست ها"
 
     def preview(self):
-        txtperview = self.text[:123] + "...."
+        txtperview = self.text[:123] + " .... "
         return txtperview
 
 
@@ -46,7 +46,7 @@ class Post(models.Model):
     # jpublish.short_description = "publish"
 
     def __str__(self):
-        return self.name
+        return self.title
 
     def Cover_tags(self):
         return format_html("<img width=120 style='border-radius:5px' src='{}'>".format(self.Cover.url))

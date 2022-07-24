@@ -1,0 +1,36 @@
+{% extends "posts/base.html" %}
+{% load static %}
+
+
+
+{% block title %}Weblog{% endblock %}
+{% block img %}{% static 'posts/images/myhome.jpg' %}{% endblock %}
+
+{% block content %}
+
+<div class="container px-4 px-lg-5">
+      <div class="row gx-4 gx-lg-5 justify-content-center">
+          <div class="col-md-10 col-lg-8 col-xl-7">
+              <!-- Post preview-->
+            {%  for post in object_list %}
+              <div class="post-preview">
+
+                  <a href="">
+                      <h2 class="post-title " >{{post.title}}</h2>
+                      <h3 class="post-subtitle">{{post.preview|safe}}</h3>
+                  </a>
+                  <p class="post-meta">نوشته شده توسط
+                      <a href="">{{post.Author}}</a>
+                     در تاریخ {{post.jpublish}}</p>
+              </div>
+            {% endfor %}
+
+          <div class="clearfix pager-botton">
+            {% if page_obj.has_next %}
+                <a class="btn btn-primary float-right " href="{% url 'old:home' page_obj.next_page_number %}">پست قدیمی &rarr;</a>
+            {% endif %}
+            {% if page_obj.has_previous %}
+                <a class="btn btn-primary float-right " href="{% url 'old:home' page_obj.previous_page_number %}">پست جدید &larr;</a>
+            {% endif %}
+        </div>
+{% endblock %}
