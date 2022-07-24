@@ -18,7 +18,8 @@ INSTALLED_APPS = [
 ]
 
 INSTALLED_APPS += [
-    'accounts'
+    'accounts',
+    'posts',
 ]
 
 MIDDLEWARE = [
