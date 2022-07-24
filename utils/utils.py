@@ -14,7 +14,6 @@ def jalali_converter(time):
             break
 
 
-    print(time)
 
     output = "{} {} {} ساعت {}:{}".format(
     time_to_list[2],

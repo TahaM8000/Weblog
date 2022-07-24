@@ -38,3 +38,18 @@ class AuthorDetail(ListView):
         context = super().get_context_data(**kwargs)
         context['Author'] = Author
         return context
+
+class CategoryDetail(ListView):
+    paginate_by = 4
+    template_name = "posts/classBaseViews/Category_detail.html"
+
+    def get_queryset(self):
+        global Category
+        slug = self.kwargs.get('slug')
+        Category = get_object_or_404(models.Category.objects.actived(), slug=slug)
+        return Category.posts.published()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['Category'] = Category
+        return context

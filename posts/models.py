@@ -6,6 +6,32 @@ from django.utils import timezone
 from utils.utils import jalali_converter
 from django.utils.html import format_html
 
+
+
+class Category(models.Model):
+    status_ch = (
+        ('a' , "Active"),
+        ('d', "Deactive"),
+    )
+    title = models.CharField(max_length=50,verbose_name="تیتر")
+    slug = models.SlugField(max_length=40, unique = True,verbose_name="آدرس")
+    Cover = models.ImageField(upload_to="images",null=True,blank=True,verbose_name="تصویر")
+    status = models.CharField(max_length=1,choices = status_ch,verbose_name="وضعیت")
+
+    objects = CategoryManager()
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "دسته بندی"
+        verbose_name_plural = "دسته بندی ها"
+
+
+
+
+
+
 class Post(models.Model):
     status_ch = (
         ('p' , "انتشار یافته"),
@@ -25,7 +51,7 @@ class Post(models.Model):
     update = models.DateTimeField(auto_now=True,verbose_name="تاریخ آپدیت")
     slug = models.SlugField(max_length=40, unique = True,verbose_name="آدرس")
     status = models.CharField(max_length=1,choices = status_ch,verbose_name="وضعیت")
-    # Category = models.ManyToManyField(Category,related_name = "posts",verbose_name="دسته بندی")
+    Category = models.ManyToManyField(Category,related_name = "posts",verbose_name="دسته بندی")
 
 
     class Meta:
