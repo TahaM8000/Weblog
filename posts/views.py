@@ -32,7 +32,7 @@ class AuthorDetail(ListView):
         global Author
         phoneNumber = self.kwargs.get('phoneNumber')
         Author = User.objects.get(phoneNumber=phoneNumber)
-        return Author.posts.published()
+        return Author.posts.published()[::-1]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

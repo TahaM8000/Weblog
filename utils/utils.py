@@ -14,13 +14,14 @@ def jalali_converter(time):
             break
 
 
+    print(time)
 
     output = "{} {} {} ساعت {}:{}".format(
     time_to_list[2],
     time_to_list[1],
     time_to_list[0],
-    time.hour,
     time.minute,
+    time.hour,
     )
     return persion_converter_number(output)
 

@@ -16,7 +16,7 @@
             {%  for post in object_list %}
               <div class="post-preview">
                   <a href="{% url 'posts:post' post.slug %}">
-                      <h2 class="post-title">{{post.name}}</h2>
+                      <h2 class="post-title">{{post.title}}</h2>
                       <h3 class="post-subtitle">{{post.preview|safe}}</h3>
                   </a>
                   <p class="post-meta">
