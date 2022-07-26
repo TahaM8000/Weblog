@@ -55,7 +55,7 @@
                       {% endif %}
 
 
-                            <button class="btn btn-success">ارسال آهنگ</button>
+                            <button class="btn btn-success">ارسال مقاله</button>
                           {% if user.is_staff and request.resolver_match.kwargs.pk %}
                               <a href="{% url 'account:delete' post.pk %}" class="btn btn-danger">حذف</a>
                           {% endif %}

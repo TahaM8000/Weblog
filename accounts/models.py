@@ -31,6 +31,9 @@ class User(AbstractBaseUser):
     def is_staff(self):
         return self.is_admin
 
+    def name(self):
+        return str(self.firstName) + " " + str(self.lastName)
+
     def is_special_user(self):
         if self.special_user > timezone.now():
             return True

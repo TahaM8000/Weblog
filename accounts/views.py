@@ -41,7 +41,12 @@ class PostDelete(mixins.SuperUserAccessMixin, mixins.FormValidMixin,DeleteView):
     model = models.Post
     success_url = reverse_lazy('account:panelHome')
 #----------------------------------------------------------------------------------------------
+class PostCreate(mixins.AuthorsAccessMixin,mixins.FormValidMixin, mixins.FieldsMixin, CreateView):
+    template_name = "accounts/PostCrud/Post_create_update.html"
+    model = models.Post
+
 #----------------------------------------------------------------------------------------------
+
 #----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------
@@ -59,9 +64,6 @@ class UserList(mixins.SuperUserAccessMixin,ListView):
 
 
 
-class PostCreate(mixins.AuthorsAccessMixin,mixins.FormValidMixin, mixins.FieldsMixin, CreateView):
-    template_name = "accounts/PostCrud/Post_create_update.html"
-    model = models.Post
 
 
 class CategoryCreate(mixins.AuthorsAccessMixin,mixins.FormValidCategoryMixin, CreateView):
@@ -116,7 +118,7 @@ class Login(LoginView):
     def get_success_url(self):
         user = self.request.user
 
-        if user.is_superuser or user.is_author:
+        if user.is_staff or user.is_author:
             return reverse_lazy('account:home')
         else:
             return reverse_lazy('account:profile')

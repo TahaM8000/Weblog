@@ -16,25 +16,29 @@
               <form  method="post" enctype="multipart/form-data"> {% csrf_token %}
                 <div class="row">
                   <div class="col-6">
-                {{form.username|as_crispy_field}}
+                {{form.firstName|as_crispy_field}}
+                <br>
                 </div>
                   <div class="col-6">
-                {{form.email|as_crispy_field}}
+                {{form.lastName|as_crispy_field}}
                 </div>
-                <div class="col-12">
-                  <label class="my-4">گذرواژه:<span>برای تغییر گذرواژه <a href="{% url 'password_change' %}">کلیک</a> نمایید.</span></label>
-                </div>
+                  <br><br>
                   <div class="col-6">
-                {{form.first_name|as_crispy_field}}
+                {{form.phoneNumber|as_crispy_field}}
+                <br>
                 </div>
                     <div class="col-6">
-                  {{form.last_name|as_crispy_field}}
+                  {{form.lastName|as_crispy_field}}
                   </div>
+                  <br><br><br>
                     <div class="col-6">
                   {{form.special_user|as_crispy_field}}
                   </div>
                     <div class="col-6">
                   {{form.is_author|as_crispy_field}}
+                  </div>
+                  <div class="col-12">
+                    <label class="my-4">گذرواژه:<span>برای تغییر گذرواژه <a href="{% url 'password_change' %}">کلیک</a> نمایید.</span></label>
                   </div>
                 </div>
                     <button class="btn btn-success">ثبت</button>

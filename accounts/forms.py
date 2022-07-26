@@ -14,7 +14,7 @@ class ProfileForm(forms.ModelForm):
         user = kwargs.pop('user')
 
         super(ProfileForm, self).__init__( *arg,**kwargs)
-        if not user.is_superuser:
+        if not user.is_staff:
             self.fields['phoneNumber'].disabled = True
             self.fields['phoneNumber'].help_text = False
             self.fields['is_active'].disabled = True
