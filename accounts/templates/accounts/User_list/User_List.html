@@ -27,7 +27,7 @@
                           <tr>
                             <th>شماره</th>
                             <th>تصویر</th>
-                            <th>نام کاربری</th>
+                            <th>شماره تلفن</th>
                             <th>نام</th>
                             <th>وضعیت</th>
                           </tr>
@@ -36,19 +36,22 @@
                           {% for user in object_list %}
                           <tr>
                             <td>{{user.id}}</td>
-                            <td><img src="{{user.Avatar.url}}" width="80px"  height="100px"></td>
-                            <td>{{user.username}}</td>
-                            <td>{{user.get_full_name}}</td>
+                            <td><img src="{% if user.Avatar %}{{user.Avatar.url}}{% else %}{% static 'posts/images/yoy.jpg' %}{% endif %}" width="80px"  height="80px"class="img-circle elevation-2" alt="User Image"></td>
+                            <td>{{user.phoneNumber}}</td>
+                            <td>{{user}}</td>
                             <td>
-                              {% if user.is_superuser %}
+                              {% if user.is_staff %}
                                 <span class="badge badge-danger"style="background-color: #5f0761;">ادمین</span>
+                                {% if user.is_author %}
+                                <span class="badge badge-danger"style="background-color: #28a745;">نویسنده</span>
+                                {% endif %}
                               {% elif user.is_author %}
                                 <span class="badge badge-danger"style="background-color: #28a745;">نویسنده</span>
                                 <a href="{% url 'account:AuthorToUser' user.pk %}" class="badge badge-primary" >عزل از نویسندگی</a>
-                                <a href="{% url 'account:situation' user.pk %}" class="badge badge-primary" >وضعیت</a>
+                                <a href="{% url 'account:situation' user.pk %}" class="badge badge-primary" >تغییر نقش</a>
                               {% else %}
                                 <span class="badge badge-danger"style="background-color: #fd7e14;">کاربر معمولی</span>
-                                <a href="{% url 'account:situation' user.pk %}" class="badge badge-primary" >وضعیت</a>
+                                <a href="{% url 'account:situation' user.pk %}" class="badge badge-primary" >تغییر نقش</a>
                                 {% endif %}
                             </td>
                       </tr>

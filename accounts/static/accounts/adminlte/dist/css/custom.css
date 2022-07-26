@@ -71,3 +71,7 @@ font-family: Sahel !important;
         margin-right: 0;
     }
 }
+
+img {
+  border-radius: 50%;
+}
