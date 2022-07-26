@@ -17,7 +17,7 @@
         <img src="{{user.Avatar.url}}" class="img-circle elevation-2" alt="User Image">
       </div>
       <div class="info">
-        <a href="#" class="d-block ">{{user.get_full_name}}</a>
+        <a href="#" class="d-block ">{{user}}</a>
       </div>
     </div>
 
@@ -35,14 +35,14 @@
             </p>
           </a>
           <ul class="nav nav-treeview">
-            {% if user.is_superuser or user.is_author %}
+            {% if user.is_staff or user.is_author %}
               <li class="nav-item">
-                {% link request 'home' 'لیست مقالات'  'fa fa-list nav-icon' %}
+                {% link request 'panelHome' 'لیست مقالات'  'fa fa-list nav-icon' %}
               </li>
               <li class="nav-item">
                 {% link request 'create' 'افزودن مقاله' 'fa fa-edit nav-icon' %}
               </li>
-                {% if user.is_superuser %}
+                {% if user.is_staff %}
                 <li class="nav-item">
                     {% link request 'create-category' 'افزودن دسته بندی' 'fa fa-edit nav-icon' %}
                 </li>

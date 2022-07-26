@@ -17,6 +17,7 @@ from django.contrib.auth.views import PasswordChangeView
 from . import mixins
 
  # mixins.FormValidMixin,
+#----------------------------------------------------------------------------------------------
 class PostList(mixins.AuthorsAccessMixin,ListView):
     template_name = "accounts/adminlte/home.html"
     def get_queryset(self):
@@ -24,6 +25,26 @@ class PostList(mixins.AuthorsAccessMixin,ListView):
             return models.Post.objects.all()[::-1]
         else:
             return models.Post.objects.filter(Author=self.request.user)
+#----------------------------------------------------------------------------------------------
+class PostPreview(mixins.AuthorAccessMixin,DetailView):
+    template_name = "posts/classBaseViews/Post_detail.html"
+    def get_object(self):
+        pk = self.kwargs.get('pk')
+        return get_object_or_404(models.Post, pk=pk)
+#----------------------------------------------------------------------------------------------
+class PostUpdate(mixins.AuthorAccessMixin, mixins.FormValidMixin, mixins.FieldsMixin, UpdateView):
+    template_name = "accounts/PostCrud/Post_create_update.html"
+    model = models.Post
+#----------------------------------------------------------------------------------------------
+class PostDelete(mixins.SuperUserAccessMixin, mixins.FormValidMixin,DeleteView):
+    template_name = "accounts/PostCrud/Post_delete.html"
+    model = models.Post
+    success_url = reverse_lazy('account:panelHome')
+#----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
 
 @login_required
 def loginview(request):
@@ -50,20 +71,11 @@ class CategoryCreate(mixins.AuthorsAccessMixin,mixins.FormValidCategoryMixin, Cr
     success_url = reverse_lazy('account:home')
 
 
-class PostPreview(mixins.AuthorAccessMixin,DetailView):
-    template_name = "accounts/classview/Post_detail.html"
-    def get_object(self):
-        pk = self.kwargs.get('pk')
-        return get_object_or_404(models.Post, pk=pk)
 
-class PostUpdate(mixins.AuthorAccessMixin, mixins.FormValidMixin, mixins.FieldsMixin, UpdateView):
-    template_name = "accounts/PostCrud/Post_create_update.html"
-    model = models.Post
 
-class PostDelete(mixins.SuperUserAccessMixin, mixins.FormValidMixin,DeleteView):
-    template_name = "accounts/PostCrud/Post_delete.html"
-    model = models.Post
-    success_url = reverse_lazy('account:home')
+
+
+
 
 class AuthorToUser(mixins.SuperUserAccessMixin, mixins.Form2ValidMixin,UpdateView):
     template_name = "accounts/User_list/User_situation.html"

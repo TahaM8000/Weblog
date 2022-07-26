@@ -20,6 +20,7 @@ INSTALLED_APPS = [
 INSTALLED_APPS += [
     'accounts',
     'posts',
+    'crispy_forms'   #pip install django-crispy-forms
 ]
 
 MIDDLEWARE = [

@@ -4,7 +4,7 @@ from posts.models import Post
 
 class FieldsMixin():
     def dispatch(self,request,*args,**kwargs):
-        self.fields = ['name','text','Cover','slug','status','Category']
+        self.fields = ['title','text','Cover','slug','status','Category']
         if request.user.is_staff:
             self.fields.append("Author")
 

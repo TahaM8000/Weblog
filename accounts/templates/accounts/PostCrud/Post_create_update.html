@@ -16,7 +16,7 @@
               <form  method="post" enctype="multipart/form-data"> {% csrf_token %}
                 <div class="row">
                   <div class="col-6">
-                {{form.name|as_crispy_field}}
+                {{form.title|as_crispy_field}}
                 </div>
                   <div class="col-12">
                 {{form.text|as_crispy_field}}
@@ -30,7 +30,7 @@
                     <div class="col-6">
                   {{form.Category|as_crispy_field}}
                   </div>
-                  {% if user.is_superuser %}
+                  {% if user.is_staff %}
                       <div class="col-6">
                         {{form.status|as_crispy_field}}
                       </div>
@@ -56,7 +56,7 @@
 
 
                             <button class="btn btn-success">ارسال آهنگ</button>
-                          {% if user.is_superuser and request.resolver_match.kwargs.pk %}
+                          {% if user.is_staff and request.resolver_match.kwargs.pk %}
                               <a href="{% url 'account:delete' post.pk %}" class="btn btn-danger">حذف</a>
                           {% endif %}
               </form>

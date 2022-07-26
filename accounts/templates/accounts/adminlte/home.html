@@ -62,9 +62,9 @@
                                     <a target="_blank" href="{% url 'account:preview' post.pk %}" class="badge badge-primary" >پیش نمایش</a>
                                 {% endif %}
                               {% endif %}
-                              {% if user.is_superuser %}
+                              {% if user.is_staff %}
                                 <a href="{% url 'account:delete' post.pk %}" class="badge badge-danger">حذف</a>
-                                <a href="{% url 'account:publish' post.pk %}" class="badge badge-danger" style="background-color: #0031a0;">منتشر کردن</a>
+                                <a href="{% url 'account:publish' post.pk %}" class="badge badge-danger" style="background-color: #0031a0;">تغییر وضعیت انتشار</a>
                           {% endif %}
                         </td>
                       </tr>
