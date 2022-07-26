@@ -1,0 +1,66 @@
+{% extends 'accounts/adminlte/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block titlemeta %}{% block title %}
+  افزودن آهنگ
+{% endblock %}{% endblock %}
+{% block main %}
+<div class="col-md-12">
+          <!-- general form elements -->
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title mb-0 float-left">افزودن پست</h3>
+            </div>
+            <div class="card-body">
+              <form  method="post" enctype="multipart/form-data"> {% csrf_token %}
+                <div class="row">
+                  <div class="col-6">
+                {{form.name|as_crispy_field}}
+                </div>
+                  <div class="col-12">
+                {{form.text|as_crispy_field}}
+                </div>
+                  <div class="col-6">
+                {{form.slug|as_crispy_field}}
+                </div>
+                    <div class="col-6">
+                  {{form.Cover|as_crispy_field}}
+                  </div>
+                    <div class="col-6">
+                  {{form.Category|as_crispy_field}}
+                  </div>
+                  {% if user.is_superuser %}
+                      <div class="col-6">
+                        {{form.status|as_crispy_field}}
+                      </div>
+                      <div class="col-6">
+                    {{form.Author|as_crispy_field}}
+                    </div>
+                  {% else %}
+                    <div class="col-6">
+                      <div id="div_id_status" class="form-group">
+                      <label for="id_status" class=" requiredField">
+                      وضعیت<span class="asteriskField">*</span>
+                      </label>
+                      <div class="">
+                         <select name="status" class="select form-control" required="" id="id_status">
+                            <option value="" selected="">---------</option>
+                            <option value="d">پیش نویس</option>
+                            <option value="i">ارسال برای ادمین</option>
+                         </select>
+                      </div>
+                      </div>
+                      </div>
+                      {% endif %}
+
+
+                            <button class="btn btn-success">ارسال آهنگ</button>
+                          {% if user.is_superuser and request.resolver_match.kwargs.pk %}
+                              <a href="{% url 'account:delete' post.pk %}" class="btn btn-danger">حذف</a>
+                          {% endif %}
+              </form>
+
+            </div>
+</div>
+{% endblock %}

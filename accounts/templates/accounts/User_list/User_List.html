@@ -1,0 +1,67 @@
+{% extends 'accounts/adminlte/base.html' %}
+{% load static %}
+{% block titlemeta %}{% block title %}
+  لیست کاربرها
+{% endblock %}{% endblock %}
+{% block main %}<div class="row">
+          <div class="col-12">
+              {% if object_list %}
+                  <div class="card">
+                    <div class="card-header">
+                      <h3 class="card-title">لیست کاربرها</h3>
+
+                      <div class="card-tools">
+                        <div class="input-group input-group-sm" style="width: 150px;">
+                          <input type="text" name="table_search" class="form-control float-right" placeholder="جستجو">
+
+                          <div class="input-group-append">
+                            <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0">
+                      <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th>شماره</th>
+                            <th>تصویر</th>
+                            <th>نام کاربری</th>
+                            <th>نام</th>
+                            <th>وضعیت</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for user in object_list %}
+                          <tr>
+                            <td>{{user.id}}</td>
+                            <td><img src="{{user.Avatar.url}}" width="80px"  height="100px"></td>
+                            <td>{{user.username}}</td>
+                            <td>{{user.get_full_name}}</td>
+                            <td>
+                              {% if user.is_superuser %}
+                                <span class="badge badge-danger"style="background-color: #5f0761;">ادمین</span>
+                              {% elif user.is_author %}
+                                <span class="badge badge-danger"style="background-color: #28a745;">نویسنده</span>
+                                <a href="{% url 'account:AuthorToUser' user.pk %}" class="badge badge-primary" >عزل از نویسندگی</a>
+                                <a href="{% url 'account:situation' user.pk %}" class="badge badge-primary" >وضعیت</a>
+                              {% else %}
+                                <span class="badge badge-danger"style="background-color: #fd7e14;">کاربر معمولی</span>
+                                <a href="{% url 'account:situation' user.pk %}" class="badge badge-primary" >وضعیت</a>
+                                {% endif %}
+                            </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.card-body -->
+              </div>
+
+              {% else %}
+                <h3>محتوایی برای نمایش وجود ندارد.</h3>
+              {% endif %}
+          </div>
+        </div>
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends 'accounts/adminlte/base.html' %}
+{% load static %}
+{% block titlemeta %}{% block title %}
+  لیست پست ها
+{% endblock %}{% endblock %}
+{% block main %}<div class="row">
+          <div class="col-12">
+              {% if object_list %}
+                  <div class="card">
+                    <div class="card-header">
+                      <h3 class="card-title">لیست پست</h3>
+
+                      <div class="card-tools">
+                        <div class="input-group input-group-sm" style="width: 150px;">
+                          <input type="text" name="table_search" class="form-control float-right" placeholder="جستجو">
+
+                          <div class="input-group-append">
+                            <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0">
+                      <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th>شماره</th>
+                            <th>تیتر</th>
+                            <th>تصویر</th>
+                            <th>نویسنده</th>
+                            <th>متن</th>
+                            <th>تاریخ انتشار</th>
+                            <th>وضعیت</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for post in object_list %}
+                          <tr>
+                            <td>{{post.id}}</td>
+                            {% if post.status in 'db'|make_list or user.is_staff %}
+                            <td><a href="{% url 'account:update' post.pk %}">{{post.title}}</a></td>
+                            {% else %}
+                            <td>{{post.title}}</td>
+                            {% endif %}
+                            <td><img src="{{post.Cover.url}}" width="90"></td>
+                            <td>{{post.Author}}</td>
+                            <td>{{post.preview|safe}}</td>
+                            <td>{{post.jpublish}}</td>
+                            <td>
+                              {% if post.status == 'p' %}
+                              <span class="badge badge-success">منتشر شده</span>
+                              <a target="_blank" href="{% url 'posts:post' post.slug %}" class="badge badge-primary">صفحه </a>
+                              {% elif post.status == 'i' %}
+                              <span class="badge badge-primary" style="background-color: #777474;">در حال بررسی</span>
+                              {% else %}
+                                {% if post.status == 'd' %}
+                                    <span class="badge badge-danger">پیش نویس</span>
+                                    <a target="_blank" href="{% url 'account:preview' post.pk %}" class="badge badge-primary" >پیش نمایش</a>
+                                {% elif post.status == 'b' %}
+                                    <span class="badge badge-danger"style="background-color: #8a7c00;">برگشت داده شده</span>
+                                    <a target="_blank" href="{% url 'account:preview' post.pk %}" class="badge badge-primary" >پیش نمایش</a>
+                                {% endif %}
+                              {% endif %}
+                              {% if user.is_superuser %}
+                                <a href="{% url 'account:delete' post.pk %}" class="badge badge-danger">حذف</a>
+                                <a href="{% url 'account:publish' post.pk %}" class="badge badge-danger" style="background-color: #0031a0;">منتشر کردن</a>
+                          {% endif %}
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.card-body -->
+              </div>
+
+              {% else %}
+                <h3>محتوایی برای نمایش وجود ندارد.</h3>
+              {% endif %}
+          </div>
+        </div>
+{% endblock %}

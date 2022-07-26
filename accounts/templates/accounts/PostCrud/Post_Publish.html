@@ -1,0 +1,25 @@
+{% extends 'accounts/adminlte/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block titlemeta %}{% block title %}
+  انتشار پست
+{% endblock %}{% endblock %}
+{% block main %}
+<div class="col-md-8 text-center mx-auto">
+          <div class="card card-danger">
+            <div class="card-header" style="background-color: #0031a0;">
+              <h3 class="card-title mb-0 float-left" >انتشار پست</h3>
+            </div>
+            <div class="card-body py-4">
+              <form  method="post" > {% csrf_token %}
+                <div class="row">
+                      <div class="col-6">
+                        {{form.status|as_crispy_field}}
+                      </div>
+                      </div>
+                  <input type="submit" name="" value="تغییر وضعیت" class="btn btn-danger" style="background-color: #0031a0;">
+              </form>
+            </div>
+</div>
+{% endblock %}

@@ -1,3 +1,118 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
+from . import forms
+from django.contrib.auth.views import LoginView
+from django.views.generic import (
+            ListView,
+            CreateView,
+            UpdateView,
+            DeleteView,
+            DetailView,)
+from accounts.models import User
+from posts import models
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import PasswordChangeView
+from . import mixins
 
-# Create your views here.
+ # mixins.FormValidMixin,
+class PostList(mixins.AuthorsAccessMixin,ListView):
+    template_name = "accounts/adminlte/home.html"
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return models.Post.objects.all()[::-1]
+        else:
+            return models.Post.objects.filter(Author=self.request.user)
+
+@login_required
+def loginview(request):
+    return render(request,'accounts/loginview.html')
+
+
+
+class UserList(mixins.SuperUserAccessMixin,ListView):
+    template_name = "accounts/User_list/User_list.html"
+    def get_queryset(self):
+        return User.objects.all()
+
+
+
+class PostCreate(mixins.AuthorsAccessMixin,mixins.FormValidMixin, mixins.FieldsMixin, CreateView):
+    template_name = "accounts/PostCrud/Post_create_update.html"
+    model = models.Post
+
+
+class CategoryCreate(mixins.AuthorsAccessMixin,mixins.FormValidCategoryMixin, CreateView):
+    fields = ['name','Cover','slug','status']
+    template_name = "accounts/PostCrud/Category_create_update.html"
+    model = models.Category
+    success_url = reverse_lazy('account:home')
+
+
+class PostPreview(mixins.AuthorAccessMixin,DetailView):
+    template_name = "accounts/classview/Post_detail.html"
+    def get_object(self):
+        pk = self.kwargs.get('pk')
+        return get_object_or_404(models.Post, pk=pk)
+
+class PostUpdate(mixins.AuthorAccessMixin, mixins.FormValidMixin, mixins.FieldsMixin, UpdateView):
+    template_name = "accounts/PostCrud/Post_create_update.html"
+    model = models.Post
+
+class PostDelete(mixins.SuperUserAccessMixin, mixins.FormValidMixin,DeleteView):
+    template_name = "accounts/PostCrud/Post_delete.html"
+    model = models.Post
+    success_url = reverse_lazy('account:home')
+
+class AuthorToUser(mixins.SuperUserAccessMixin, mixins.Form2ValidMixin,UpdateView):
+    template_name = "accounts/User_list/User_situation.html"
+    model = User
+    fields = ['is_author']
+    success_url = reverse_lazy('account:userlist')
+
+
+class Situation(mixins.SuperUserAccessMixin,mixins.FieldsUserSituationMixin,mixins.Form3ValidMixin,UpdateView):
+        template_name = "accounts/User_list/User_situation2.html"
+        model = User
+        success_url = reverse_lazy('account:userlist')
+
+
+class PostPublish(mixins.SuperUserAccessMixin, mixins.Form2ValidMixin,UpdateView):
+    template_name = "accounts/PostCrud/Post_Publish.html"
+    fields = ['status']
+    model = models.Post
+
+
+class Profile(LoginRequiredMixin, UpdateView):
+    form_class = forms.ProfileForm
+    template_name = "accounts/Profile.html"
+    model = User
+    success_url = reverse_lazy('account:profile')
+
+    def get_object(self):
+        return User.objects.get(pk=self.request.user.pk)
+
+    def get_form_kwargs(self):
+        kwargs = super(Profile, self).get_form_kwargs()
+        kwargs.update({
+            'user' : self.request.user
+        })
+        return kwargs
+
+class Login(LoginView):
+    def get_success_url(self):
+        user = self.request.user
+
+        if user.is_superuser or user.is_author:
+            return reverse_lazy('account:home')
+        else:
+            return reverse_lazy('account:profile')
+
+class PasswordChangeView(PasswordChangeView):
+    success_url = reverse_lazy('account:password_change_done')
+
+
+class Ran(ListView):
+    template_name = "accounts/postCrud/Ran.html"
+    model = models.Post

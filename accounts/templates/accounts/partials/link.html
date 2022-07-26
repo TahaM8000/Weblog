@@ -1,0 +1,8 @@
+<a href="{% url link %}" class="nav-link {% if request.resolver_match.url_name == link_name %} active {% endif %}">
+  <i class="{{classes}}"></i>
+  <p>{{content}}
+    {% if span != False %}
+    <span class="right badge badge-danger">{{span}}</span>
+    {% endif %}
+  </p>
+</a>
