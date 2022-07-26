@@ -1,0 +1,27 @@
+{% extends "posts/base.html" %}
+{% load static %}
+{% load base_tags %}
+
+{% block navbar %}{% Category_navbar %}{% endblock %}
+{% block title %}Weblog{% endblock %}
+{% block img %}{% static 'posts/images/myhome.jpg' %}{% endblock %}
+
+{% block content %}
+
+<div class="container px-4 px-lg-5">
+      <div class="row gx-4 gx-lg-5 justify-content-center">
+          <div class="col-md-10 col-lg-8 col-xl-7">
+              <div class="post-preview">
+                  <a >
+                      <h2 class="post-title" style="text-align:center">About us</h2>
+                      <br>
+                      <h3 class="post-subtitle">
+ورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
+
+                      </h3>
+                  </a>
+                    <br>  <br>
+              </div>
+
+
+{% endblock %}
