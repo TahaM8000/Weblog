@@ -1,9 +1,0 @@
-{% load admin_urls %}
-
-<div class="collapse navbar-collapse" id="navbarResponsive">
-    <ul class="navbar-nav ms-auto py-4 py-lg-0">
-      {% for Son in Sonr %}
-          <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="Songer/{{Son.slug}}">{{Son.name}}</a></li>
-        {% endfor %}
-    </ul>
-</div>

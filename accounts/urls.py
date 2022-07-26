@@ -18,6 +18,6 @@ urlpatterns = [
     path('Users/situation/<int:pk>',viewsA.Situation.as_view(),name='situation'),
     path('Users/',viewsA.UserList.as_view(),name='userlist'),
     path('Post/Publish/<int:pk>', viewsA.PostPublish.as_view() ,name='publish'),
-    path('Ran/', viewsA.Ran.as_view() ,name='login'),
+    path('Ran/', viewsA.Login.as_view() ,name='login'),
 
 ]

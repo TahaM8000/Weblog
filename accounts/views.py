@@ -41,13 +41,26 @@ class PostDelete(mixins.SuperUserAccessMixin, mixins.FormValidMixin,DeleteView):
     model = models.Post
     success_url = reverse_lazy('account:panelHome')
 #----------------------------------------------------------------------------------------------
-class PostCreate(mixins.AuthorsAccessMixin,mixins.FormValidMixin, mixins.FieldsMixin, CreateView):
+class PostCreate(mixins.FormValidMixin, mixins.FieldsMixin,mixins.AuthorsAccessMixin, CreateView):
     template_name = "accounts/PostCrud/Post_create_update.html"
     model = models.Post
+    success_url = reverse_lazy('account:panelHome')
 
 #----------------------------------------------------------------------------------------------
+class Login(LoginView):
+    def get_success_url(self):
+        user = self.request.user
 
+        if user.is_staff or user.is_author:
+            return reverse_lazy('account:panelHome')
+        else:
+            return reverse_lazy('account:profile')
 #----------------------------------------------------------------------------------------------
+class CategoryCreate(mixins.AuthorsAccessMixin,mixins.FormValidCategoryMixin, CreateView):
+    fields = ['title','Cover','slug','status']
+    template_name = "accounts/PostCrud/Category_create_update.html"
+    model = models.Category
+    success_url = reverse_lazy('account:panelHome')
 #----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------
 
@@ -66,11 +79,7 @@ class UserList(mixins.SuperUserAccessMixin,ListView):
 
 
 
-class CategoryCreate(mixins.AuthorsAccessMixin,mixins.FormValidCategoryMixin, CreateView):
-    fields = ['name','Cover','slug','status']
-    template_name = "accounts/PostCrud/Category_create_update.html"
-    model = models.Category
-    success_url = reverse_lazy('account:home')
+
 
 
 
@@ -114,14 +123,7 @@ class Profile(LoginRequiredMixin, UpdateView):
         })
         return kwargs
 
-class Login(LoginView):
-    def get_success_url(self):
-        user = self.request.user
 
-        if user.is_staff or user.is_author:
-            return reverse_lazy('account:home')
-        else:
-            return reverse_lazy('account:profile')
 
 class PasswordChangeView(PasswordChangeView):
     success_url = reverse_lazy('account:password_change_done')
