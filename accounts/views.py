@@ -62,8 +62,26 @@ class CategoryCreate(mixins.AuthorsAccessMixin,mixins.FormValidCategoryMixin, Cr
     model = models.Category
     success_url = reverse_lazy('account:panelHome')
 #----------------------------------------------------------------------------------------------
-#----------------------------------------------------------------------------------------------
+class Profile(LoginRequiredMixin, UpdateView):
+    form_class = forms.ProfileForm
+    template_name = "accounts/Profile.html"
+    model = User
+    success_url = reverse_lazy('account:panelHome')
 
+    def get_object(self):
+        return User.objects.get(pk=self.request.user.pk)
+
+    def get_form_kwargs(self):
+        kwargs = super(Profile, self).get_form_kwargs()
+        kwargs.update({
+            'user' : self.request.user
+        })
+        return kwargs
+
+#----------------------------------------------------------------------------------------------
+class PasswordChangeView(PasswordChangeView):
+    success_url = reverse_lazy('account:password_change_done')
+#----------------------------------------------------------------------------------------------
 @login_required
 def loginview(request):
     return render(request,'accounts/loginview.html')
@@ -104,31 +122,4 @@ class Situation(mixins.SuperUserAccessMixin,mixins.FieldsUserSituationMixin,mixi
 class PostPublish(mixins.SuperUserAccessMixin, mixins.Form2ValidMixin,UpdateView):
     template_name = "accounts/PostCrud/Post_Publish.html"
     fields = ['status']
-    model = models.Post
-
-
-class Profile(LoginRequiredMixin, UpdateView):
-    form_class = forms.ProfileForm
-    template_name = "accounts/Profile.html"
-    model = User
-    success_url = reverse_lazy('account:profile')
-
-    def get_object(self):
-        return User.objects.get(pk=self.request.user.pk)
-
-    def get_form_kwargs(self):
-        kwargs = super(Profile, self).get_form_kwargs()
-        kwargs.update({
-            'user' : self.request.user
-        })
-        return kwargs
-
-
-
-class PasswordChangeView(PasswordChangeView):
-    success_url = reverse_lazy('account:password_change_done')
-
-
-class Ran(ListView):
-    template_name = "accounts/postCrud/Ran.html"
     model = models.Post
