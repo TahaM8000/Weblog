@@ -13,14 +13,28 @@ def jalali_converter(time):
             time_to_list[1] = month
             break
 
+    hour = time.hour
+    minute = time.minute
+    min = ""
 
+    if(int(time.minute)+30):
+        hour += 5
+    else:
+        hour += 4
+
+    minute += 30
+    minute %= 60
+    if(minute<10):
+        min = '0' + str(minute)
+    else:
+        min = str(minute)
 
     output = "{} {} {} ساعت {}:{}".format(
     time_to_list[2],
     time_to_list[1],
     time_to_list[0],
-    time.minute,
-    time.hour,
+    int(hour),
+    min,
     )
     return persion_converter_number(output)
 

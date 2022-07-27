@@ -77,7 +77,6 @@ class Profile(LoginRequiredMixin, UpdateView):
             'user' : self.request.user
         })
         return kwargs
-
 #----------------------------------------------------------------------------------------------
 class PasswordChangeView(PasswordChangeView):
     success_url = reverse_lazy('account:password_change_done')
@@ -85,41 +84,26 @@ class PasswordChangeView(PasswordChangeView):
 @login_required
 def loginview(request):
     return render(request,'accounts/loginview.html')
-
-
-
+#----------------------------------------------------------------------------------------------
+class PostPublish(mixins.SuperUserAccessMixin, mixins.Form2ValidMixin,UpdateView):
+    template_name = "accounts/PostCrud/Post_Publish.html"
+    fields = ['status']
+    model = models.Post
+    success_url = reverse_lazy('account:panelHome')
+#----------------------------------------------------------------------------------------------
 class UserList(mixins.SuperUserAccessMixin,ListView):
     template_name = "accounts/User_list/User_list.html"
     def get_queryset(self):
         return User.objects.all()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#----------------------------------------------------------------------------------------------
 class AuthorToUser(mixins.SuperUserAccessMixin, mixins.Form2ValidMixin,UpdateView):
     template_name = "accounts/User_list/User_situation.html"
     model = User
     fields = ['is_author']
     success_url = reverse_lazy('account:userlist')
-
-
+#----------------------------------------------------------------------------------------------
 class Situation(mixins.SuperUserAccessMixin,mixins.FieldsUserSituationMixin,mixins.Form3ValidMixin,UpdateView):
-        template_name = "accounts/User_list/User_situation2.html"
-        model = User
-        success_url = reverse_lazy('account:userlist')
-
-
-class PostPublish(mixins.SuperUserAccessMixin, mixins.Form2ValidMixin,UpdateView):
-    template_name = "accounts/PostCrud/Post_Publish.html"
-    fields = ['status']
-    model = models.Post
+    template_name = "accounts/User_list/User_situation2.html"
+    model = User
+    success_url = reverse_lazy('account:userlist')
+#----------------------------------------------------------------------------------------------
